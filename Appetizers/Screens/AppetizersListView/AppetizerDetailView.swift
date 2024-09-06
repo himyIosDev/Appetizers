@@ -21,72 +21,20 @@ struct AppetizerDetailView: View {
             
             VStack {
                 //
-                Text(appetizerDetailObj.name)
-                    .font(.title3)
-                    .fontWeight(.semibold)
-                
-                Text(appetizerDetailObj.description)
-                    .multilineTextAlignment(.center)
-                    .font(.subheadline)
-                    .padding()
+                APTitle(title: appetizerDetailObj.name)
+                APDescription(descp: appetizerDetailObj.description)
                 
                 HStack(spacing: 40) {
                     //
-                    VStack(spacing: 5) {
-                        //
-                        Text("Calories")
-                            .bold()
-                            .font(.caption)
-                        
-                        Text("\(appetizerDetailObj.calories)")
-                            .foregroundStyle(.secondary)
-                            .fontWeight(.semibold)
-                            .italic()
-                    }
-                    
-                    VStack(spacing: 5) {
-                        //
-                        Text("Carbs")
-                            .bold()
-                            .font(.caption)
-                        
-                        Text("\(appetizerDetailObj.carbs)")
-                            .foregroundStyle(.secondary)
-                            .fontWeight(.semibold)
-                            .italic()
-                    }
-                    
-                    VStack(spacing: 5) {
-                        //
-                        Text("Protein")
-                            .bold()
-                            .font(.caption)
-                        
-                        Text("\(appetizerDetailObj.protein)")
-                            .foregroundStyle(.secondary)
-                            .fontWeight(.semibold)
-                            .italic()
-                    }
+                    NutritionInfo(titleStr: "Calories", value: appetizerDetailObj.calories)
+                    NutritionInfo(titleStr: "Carbs", value: appetizerDetailObj.carbs)
+                    NutritionInfo(titleStr: "Protein", value: appetizerDetailObj.protein)
                 }
             }
             
             Spacer()
             
-            Button {
-                //
-                print("tapped")
-                //
-            } label: {
-                //
-                Text("$\(appetizerDetailObj.price, specifier: "%.2f") - Add To Order")
-                    .font(.title3)
-                    .fontWeight(.semibold)
-                    .frame(width: 260, height: 50)
-                    .foregroundStyle(.white)
-                    .background(.brandPrimary)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-            }
-            .padding(.bottom)
+            APButton(titleString:"$\(appetizerDetailObj.price, specifier: "%.2f") - Add To Order")
         }
         .frame(width: 300, height: 525)
         .background(Color(.systemBackground))
@@ -99,17 +47,7 @@ struct AppetizerDetailView: View {
             
         } label: {
             //
-            ZStack {
-                Circle()
-                    .frame(width: 30, height: 30)
-                    .foregroundStyle(.white)
-                    .opacity(0.6)
-                
-                Image(systemName: "xmark")
-                    .imageScale(.small)
-                    .frame(width: 44, height: 44)
-                    .foregroundStyle(.black)
-            }
+            XDismissBtn()
             
         }, alignment: .topTrailing)
     }
@@ -117,4 +55,54 @@ struct AppetizerDetailView: View {
 
 #Preview {
     AppetizerDetailView(appetizerDetailObj: MockData.sampleAppetizer, isShowingDetail: .constant(true))
+}
+
+// ************************************************************
+
+struct APTitle : View {
+    //
+    let title : String
+    var body: some View {
+        //
+        Text(title)
+            .font(.title3)
+            .fontWeight(.semibold)
+    }
+}
+
+// ************************************************************
+
+struct APDescription : View {
+    //
+    let descp : String
+    var body: some View {
+        //
+        Text(descp)
+            .multilineTextAlignment(.center)
+            .font(.subheadline)
+            .padding()
+    }
+}
+
+// ************************************************************
+
+struct NutritionInfo : View {
+    //
+    let titleStr : String
+    let value : Int
+    
+    var body: some View {
+        //
+        VStack(spacing: 5) {
+            //
+            Text(titleStr)
+                .bold()
+                .font(.caption)
+            
+            Text("\(value)")
+                .foregroundStyle(.secondary)
+                .fontWeight(.semibold)
+                .italic()
+        }
+    }
 }
