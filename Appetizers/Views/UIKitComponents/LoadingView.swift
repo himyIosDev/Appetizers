@@ -29,9 +29,7 @@ struct LoadingView: View {
         ZStack {
             //
             Color(.systemBackground)
-                .ignoresSafeArea(.all)
-            
-            
+                .ignoresSafeArea()
             
             ActivityIndicator()
         }

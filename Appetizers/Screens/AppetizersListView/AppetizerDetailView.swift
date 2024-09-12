@@ -9,6 +9,8 @@ import SwiftUI
 
 struct AppetizerDetailView: View {
     //
+    @EnvironmentObject var order : Order
+    
     let appetizerDetailObj : Appetizer
     @Binding var isShowingDetail : Bool
     
@@ -34,7 +36,20 @@ struct AppetizerDetailView: View {
             
             Spacer()
             
-            APButton(titleString:"$\(appetizerDetailObj.price, specifier: "%.2f") - Add To Order")
+            Button {
+                //
+                order.addItem(appetizerItem: self.appetizerDetailObj)
+                self.isShowingDetail = false
+            } label: {
+                //
+//                APButton(titleString:"$\(self.appetizerDetailObj.price, specifier: "%.2f") - Add To Order")
+                Text("$\(self.appetizerDetailObj.price, specifier: "%.2f") - Add To Order")
+            }
+//            .buttonStyle(.bordered)
+//            .tint(.brandPrimary)
+//            .controlSize(.large)
+            .modifier(StandardButtonStyle())
+            .padding(.bottom)
         }
         .frame(width: 300, height: 525)
         .background(Color(.systemBackground))
@@ -43,7 +58,7 @@ struct AppetizerDetailView: View {
         .overlay(Button {
             //
             print("Dismiss")
-            isShowingDetail = false
+            self.isShowingDetail = false
             
         } label: {
             //
